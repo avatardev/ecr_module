@@ -56,7 +56,8 @@ class PaymentServiceEcr extends EcrService {
     );
     final panHex = EcrUtils.asciiToHex(pan, lineLength: 19);
 
-    final expiryDateHex = (transType == EcrConstants.transTypeEchoTest ||
+    final expiryDateHex =
+        (transType == EcrConstants.transTypeEchoTest ||
             transType == EcrConstants.transTypeBalanceInquiryFlazz)
         ? EcrUtils.asciiToHex(expiryDate, lineLength: 4, padFilter: '0')
         : EcrUtils.asciiToHex(expiryDate);
@@ -171,8 +172,6 @@ class PaymentServiceEcr extends EcrService {
       ecrVer: EcrConstants.ecrVer01,
       transType: EcrConstants.transTypeSale,
       amount: amount.toString(),
-      pan: EcrConstants.defaultPan,
-      expiryDate: EcrConstants.defaultExpiryDate,
     );
   }
 
@@ -186,8 +185,6 @@ class PaymentServiceEcr extends EcrService {
       ecrVer: EcrConstants.ecrVer03,
       transType: EcrConstants.transTypeTopUpFlazz,
       amount: amount.toString(),
-      pan: EcrConstants.defaultPan,
-      expiryDate: EcrConstants.defaultExpiryDate,
     );
   }
 
@@ -197,8 +194,6 @@ class PaymentServiceEcr extends EcrService {
       devicePort: devicePort,
       ecrVer: EcrConstants.ecrVer03,
       transType: EcrConstants.transTypeSettlement,
-      pan: EcrConstants.defaultPan,
-      expiryDate: EcrConstants.defaultExpiryDate,
     );
   }
 
@@ -208,7 +203,6 @@ class PaymentServiceEcr extends EcrService {
       devicePort: devicePort,
       ecrVer: EcrConstants.ecrVer03,
       transType: EcrConstants.transTypeEchoTest,
-      expiryDate: EcrConstants.expiryDateForTest,
     );
   }
 
@@ -220,7 +214,19 @@ class PaymentServiceEcr extends EcrService {
       devicePort: devicePort,
       ecrVer: EcrConstants.ecrVer03,
       transType: EcrConstants.transTypeBalanceInquiryFlazz,
-      expiryDate: EcrConstants.expiryDateForTest,
+    );
+  }
+
+  @override
+  Future<Stream<Uint8List>?> createPaymentTopUpFlazz({
+    required UsbPort devicePort,
+    required int amount,
+  }) async {
+    return _sendMessage(
+      devicePort: devicePort,
+      ecrVer: EcrConstants.ecrVer03,
+      transType: EcrConstants.transTypeFlazzCard,
+      amount: amount.toString(),
     );
   }
 }

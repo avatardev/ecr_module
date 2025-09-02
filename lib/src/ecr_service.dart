@@ -30,4 +30,9 @@ abstract class EcrService {
   Future<Stream<Uint8List>?> echoTest({required UsbPort devicePort});
 
   Future<Stream<Uint8List>?> balanceInquiryFlazz({required UsbPort devicePort});
+
+  Future<Stream<Uint8List>?> createPaymentFlazzCard({
+    required UsbPort devicePort,
+    required int amount,
+  });
 }

@@ -11,6 +11,7 @@ class EcrConstants {
   static const String transTypeSettlement = '10';
   static const String transTypeEchoTest = '17';
   static const String transTypeBalanceInquiryFlazz = '36';
+  static const String transTypeFlazzCard = '06';
 
   // Default Card Info
   static const String defaultPan = '5432480089691688';
