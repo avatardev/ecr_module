@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'dart:typed_data';
 
-import 'package:ecr_bca/ecr_service.dart';
 import 'package:usb_serial/usb_serial.dart';
 
 import 'ecr_constants.dart';
+import 'ecr_service.dart';
 import 'ecr_utils.dart';
 
 class PaymentServiceEcr extends EcrService {
@@ -139,7 +139,7 @@ class PaymentServiceEcr extends EcrService {
   @override
   Future<Stream<Uint8List>?> createPaymentQris({
     required UsbPort devicePort,
-    required int amount,
+    required double amount,
   }) async {
     return _sendMessage(
       devicePort: devicePort,
@@ -165,7 +165,7 @@ class PaymentServiceEcr extends EcrService {
   @override
   Future<Stream<Uint8List>?> createPaymentSale({
     required UsbPort devicePort,
-    required int amount,
+    required double amount,
   }) async {
     return _sendMessage(
       devicePort: devicePort,
@@ -178,7 +178,7 @@ class PaymentServiceEcr extends EcrService {
   @override
   Future<Stream<Uint8List>?> createPaymentTopUpFlazz({
     required UsbPort devicePort,
-    required int amount,
+    required double amount,
   }) async {
     return _sendMessage(
       devicePort: devicePort,
@@ -218,10 +218,24 @@ class PaymentServiceEcr extends EcrService {
   }
 
   @override
-  Future<Stream<Uint8List>?> createPaymentTopUpFlazz({
-    required UsbPort devicePort,
-    required int amount,
-  }) async {
+  Future<Uint8List> ackResponse({required UsbPort devicePort}) async {
+    String ack = String.fromCharCode(0x06);
+    List<int> binaryData = EcrUtils.hexToBytes(EcrUtils.asciiToHex(ack));
+    return Uint8List.fromList(binaryData);
+  }
+
+  @override
+  Future<Uint8List> nakResponse({required UsbPort devicePort}) async {
+    String nak = String.fromCharCode(0x15);
+    List<int> binaryData = EcrUtils.hexToBytes(EcrUtils.asciiToHex(nak));
+    return Uint8List.fromList(binaryData);
+  }
+
+  @override
+  Future<Stream<Uint8List>?> createPaymentFlazzCard({
+    required devicePort,
+    required double amount,
+  }) {
     return _sendMessage(
       devicePort: devicePort,
       ecrVer: EcrConstants.ecrVer03,

@@ -84,7 +84,9 @@ class EcrUtils {
       throw ArgumentError('Index start is out of bounds');
     }
     return str.substring(
-        start, (start + length) > str.length ? str.length : (start + length));
+      start,
+      (start + length) > str.length ? str.length : (start + length),
+    );
   }
 
   // Fungsi untuk mengonversi data hex ke format biner
@@ -97,8 +99,11 @@ class EcrUtils {
     return bytes;
   }
 
-  static String asciiToHex(String input,
-      {int? lineLength, String padFilter = ' '}) {
+  static String asciiToHex(
+    String input, {
+    int? lineLength,
+    String padFilter = ' ',
+  }) {
     // Tambahkan spasi jika panjang input kurang dari lineLength
     String paddedInput = input.padRight(lineLength ?? 0, padFilter);
 

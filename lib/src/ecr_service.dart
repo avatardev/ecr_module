@@ -10,11 +10,11 @@ abstract class EcrService {
   Future<void> disconnectDevices(UsbPort devicePort);
   Future<Stream<Uint8List>?> createPaymentSale({
     required UsbPort devicePort,
-    required int amount,
+    required double amount,
   });
   Future<Stream<Uint8List>?> createPaymentQris({
     required UsbPort devicePort,
-    required int amount,
+    required double amount,
   });
   Future<Stream<Uint8List>?> createPaymentQrisInquiry({
     required UsbPort devicePort,
@@ -22,7 +22,7 @@ abstract class EcrService {
   });
   Future<Stream<Uint8List>?> createPaymentTopUpFlazz({
     required UsbPort devicePort,
-    required int amount,
+    required double amount,
   });
 
   Future<Stream<Uint8List>?> settlement({required UsbPort devicePort});
@@ -33,6 +33,10 @@ abstract class EcrService {
 
   Future<Stream<Uint8List>?> createPaymentFlazzCard({
     required UsbPort devicePort,
-    required int amount,
+    required double amount,
   });
+
+  Future<Uint8List> ackResponse({required UsbPort devicePort});
+
+  Future<Uint8List> nakResponse({required UsbPort devicePort});
 }
